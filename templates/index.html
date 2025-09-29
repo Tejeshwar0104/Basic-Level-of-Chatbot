@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket Booking Bot</title>
+    <link rel="icon" type="image/x-icon" href="Bus ticket booking Bot Logo.png">
+</head>
+<style>
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        /* background: linear-gradient(135deg, #e2e6fa 0%, #dab6ff 100%); */
+        /* max-height: 100%;
+        max-width: 100%; */
+        width: auto;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 5%;
+        font-size: 12mm;
+    }
+
+    img {
+        max-width: 30%;
+        max-height: 70%;
+        margin-left: 5%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .chatbox {
+    width: 600px;
+    height: 500px;
+    background-color: rgb(232, 232, 255);
+    border: 2px solid black;
+    margin: 30px auto;  /* This centers it */
+    border-radius: 10%;
+    box-shadow: 5px 5px 10px 2px #8000ff;
+}
+
+    .chatbox p{
+        text-align: center;
+        font-size: 5mm;
+    }
+
+    .chatarea {
+        width: 85%;
+        height: 400px;
+        border: 2px solid black;
+        margin-left: 7%;
+        overflow-y: auto;
+        border-radius: 10%;
+        box-shadow: 2px 2px 5px 2px #00f7ff;
+    }
+
+ .chatarea p {
+        font-size: 4mm;
+        text-align: left;
+        margin-left: 15px;
+        line-height: 0.7cm;
+        animation: float 1s ease-in-out;
+    }
+
+    @keyframes float {
+  0% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+    .chatarea input {
+        font-size: 4mm;
+        text-align: right;
+        margin-right: 15px;
+        line-height: 0.7cm;
+        float: right;
+        width: 90%;
+        animation: moveLeft 1s ease-in-out;
+    }
+
+    .chatarea label {
+        font-size: 4mm;
+        text-align: left;
+        margin-left: 15px;
+        animation: float 1s ease-in-out;
+    }
+
+    @keyframes moveLeft {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+    .chatarea select {
+        font-size: 4mm;
+        text-align: right;
+        margin-right: 15px;
+        line-height: 0.7cm;
+        float: right;
+        width: 90%;
+        animation: moveLeft 1s ease-in-out;
+    }
+    .bus-list {
+        background-color: #f0f0f0;
+        padding: 10px;
+        margin: 10px 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .bus-item {
+        margin: 5px 0;
+    }
+
+    .fare-display {
+        background-color: #d4edda;
+        padding: 15px;
+        margin: 10px 15px;
+        border-radius: 5px;
+        border: 2px solid #28a745;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <h1>Bus Ticket Booking Bot</h1>
+    <!-- <img src="Bus ticket booking Bot Logo.png" alt="BusLogo"> -->
+
+    <div class="chatbox">
+        <p>Ticket Bot</p>
+        <div class="chatarea">
+            <div id="0">
+                <p>Hello User, Welcome to our Bus Ticket Booking Bot. Happy to have you here.</p>
+                <p>I can help you booking bus tickets for you.</p>
+            </div>
+
+            <div id="1">
+                <p>May I know the Departing station?</p>
+                <input type="text" list="departstations" id="departingstations" name="departingstations" placeholder="Eg. Chennai">
+                <datalist id="departstations" name="departstations">
+                    <option value="ALANKULAM">ALANKULAM</option>
+                        <option value="ANNAVASAL">ANNAVASAL</option>
+                        <option value="ARANI">ARANI</option>
+                        <option value="ARANTHANGI">ARANTHANGI</option>
+                        <option value="ARIMALAM">ARIMALAM</option>
+                        <option value="ARUPPUKOTTAI">ARUPPUKOTTAI</option>
+                        <option value="AVUDAIYAR KOIL">AVUDAIYAR KOIL</option>
+                        <option value="BANGALORE">BANGALORE</option>
+                        <option value="BODI">BODI</option>
+                        <option value="CHENGANACHERRY">CHENGANACHERRY</option>
+                        <option value="CHENNAI">CHENNAI</option>
+                        <option value="CHENNAI (TVTR)">CHENNAI (TVTR)</option>
+                        <option value="CHIDAMBARAM">CHIDAMBARAM</option>
+                        <option value="COIMBATORE">COIMBATORE</option>
+                        <option value="CUMBAM">CUMBAM</option>
+                        <option value="DEVAKOTTAI">DEVAKOTTAI</option>
+                        <option value="DHARAPURAM">DHARAPURAM</option>
+                        <option value="DHARMAPURI">DHARMAPURI</option>
+                        <option value="DINDIGUL">DINDIGUL</option>
+                        <option value="ERNAKULAM">ERNAKULAM</option>
+                        <option value="ERODE">ERODE</option>
+                        <option value="ERUVADI">ERUVADI</option>
+                        <option value="GANDARVAKOTTAI">GANDARVAKOTTAI</option>
+                        <option value="GOBI">GOBI</option>
+                        <option value="GUDALORE (OODY)">GUDALORE (OODY)</option>
+                        <option value="GUDALORE (OOTY)">GUDALORE (OOTY)</option>
+                        <option value="GURUVAYUR">GURUVAYUR</option>
+                        <option value="HOSUR">HOSUR</option>
+                        <option value="IDAYANKUDI">IDAYANKUDI</option>
+                        <option value="ILUPPUR">ILUPPUR</option>
+                        <option value="KALPAKKAM">KALPAKKAM</option>
+                        <option value="KAMUDHI">KAMUDHI</option>
+                        <option value="KANYAKUMARI">KANYAKUMARI</option>
+                        <option value="KARAIKUDI">KARAIKUDI</option>
+                        <option value="KARUNGAL">KARUNGAL</option>
+                        <option value="KARUR">KARUR</option>
+                        <option value="KAZHUGUMALAI">KAZHUGUMALAI</option>
+                        <option value="KEERAMANGALAM">KEERAMANGALAM</option>
+                        <option value="KEEZHAKARAI">KEEZHAKARAI</option>
+                        <option value="KODAIKANAL">KODAIKANAL</option>
+                        <option value="KOLLAM">KOLLAM</option>
+                        <option value="KOLLENCODE">KOLLENCODE</option>
+                        <option value="KOTTARAKARA">KOTTARAKARA</option>
+                        <option value="KOVILPATTI">KOVILPATTI</option>
+                        <option value="KOZHICODE">KOZHICODE</option>
+                        <option value="KULASEKARAM">KULASEKARAM</option>
+                        <option value="KULASEKARAPATTI">KULASEKARAPATTI</option>
+                        <option value="KULATHUR">KULATHUR</option>
+                        <option value="KUMBAKONAM">KUMBAKONAM</option>
+                        <option value="KUMILI">KUMILI</option>
+                        <option value="KUTTAM">KUTTAM</option>
+                        <option value="MADURAI">MADURAI</option>
+                        <option value="MANALMELKUDI">MANALMELKUDI</option>
+                        <option value="MANNACHANALLUR">MANNACHANALLUR</option>
+                        <option value="MANNARKUDI">MANNARKUDI</option>
+                        <option value="MARTHANDAM">MARTHANDAM</option>
+                        <option value="MAYILADUTHURAI">MAYILADUTHURAI</option>
+                        <option value="MEEMISAL-TONDI-">MEEMISAL-TONDI-</option>
+                        <option value="MELUR">MELUR</option>
+                        <option value="METTUPALAYAM">METTUPALAYAM</option>
+                        <option value="MYLADUTHURAI">MYLADUTHURAI</option>
+                        <option value="NAGAPATTINAM">NAGAPATTINAM</option>
+                        <option value="NAGERCOIL">NAGERCOIL</option>
+                        <option value="NAKUDI">NAKUDI</option>
+                        <option value="NAMAKKAL">NAMAKKAL</option>
+                        <option value="NATHAM">NATHAM</option>
+                        <option value="OOTY">OOTY</option>
+                        <option value="OPPILAN">OPPILAN</option>
+                        <option value="PALANI">PALANI</option>
+                        <option value="PALLAPATTI">PALLAPATTI</option>
+                        <option value="PAPANASAM-TNV">PAPANASAM-TNV</option>
+                        <option value="PARAMAKUDI">PARAMAKUDI</option>
+                        <option value="PATHANAMTHITTA">PATHANAMTHITTA</option>
+                        <option value="PATTUKOTTAI">PATTUKOTTAI</option>
+                        <option value="PERAIYUR">PERAIYUR</option>
+                        <option value="PERIYAKULAM">PERIYAKULAM</option>
+                        <option value="PERIYAPATTINAM">PERIYAPATTINAM</option>
+                        <option value="POLLACHI">POLLACHI</option>
+                        <option value="PONNAMARAVATHY">PONNAMARAVATHY</option>
+                        <option value="PUDUCHERRY">PUDUCHERRY</option>
+                        <option value="PUDUKKOTTAI">PUDUKKOTTAI</option>
+                        <option value="PUDUKOTTAI">PUDUKOTTAI</option>
+                        <option value="PULLAMBADI">PULLAMBADI</option>
+                        <option value="RAMESWARAM">RAMESWARAM</option>
+                        <option value="RAMNAD">RAMNAD</option>
+                        <option value="SALEM">SALEM</option>
+                        <option value="SANKARANKOIL">SANKARANKOIL</option>
+                        <option value="SATTAN KULAM">SATTAN KULAM</option>
+                        <option value="SAYALKUDI">SAYALKUDI</option>
+                        <option value="SHENCOTTAH">SHENCOTTAH</option>
+                        <option value="SIVAGANGAI">SIVAGANGAI</option>
+                        <option value="SIVAKASI">SIVAKASI</option>
+                        <option value="SRIRANGAM">SRIRANGAM</option>
+                        <option value="SRIVILLIPUTHUR">SRIVILLIPUTHUR</option>
+                        <option value="TAMBARAM">TAMBARAM</option>
+                        <option value="THANJAVUR">THANJAVUR</option>
+                        <option value="THENI">THENI</option>
+                        <option value="THYSAYANVILAI">THYSAYANVILAI</option>
+                        <option value="TIRUCHENDUR">TIRUCHENDUR</option>
+                        <option value="TIRUMANGALAM">TIRUMANGALAM</option>
+                        <option value="TIRUMAYAM">TIRUMAYAM</option>
+                        <option value="TIRUNALLAR">TIRUNALLAR</option>
+                        <option value="TIRUNELVELI">TIRUNELVELI</option>
+                        <option value="TIRUPATHI">TIRUPATHI</option>
+                        <option value="TIRUPATHURRMD">TIRUPATHURRMD</option>
+                        <option value="TIRUPPUR">TIRUPPUR</option>
+                        <option value="TIRUTHANGAL">TIRUTHANGAL</option>
+                        <option value="TIRUTHURAIPOOND">TIRUTHURAIPOOND</option>
+                        <option value="TIRUVANMIYUR">TIRUVANMIYUR</option>
+                        <option value="TIRUVARUR">TIRUVARUR</option>
+                        <option value="TRICHY">TRICHY</option>
+                        <option value="TRICHY (SRR)">TRICHY (SRR)</option>
+                        <option value="TRICHY(BHEL)">TRICHY(BHEL)</option>
+                        <option value="TRICHY-BHEL">TRICHY-BHEL</option>
+                        <option value="TRISSUR">TRISSUR</option>
+                        <option value="TRIVANDRUM">TRIVANDRUM</option>
+                        <option value="TUTICORIN">TUTICORIN</option>
+                        <option value="UDANKUDI">UDANKUDI</option>
+                        <option value="UDUMALPET">UDUMALPET</option>
+                        <option value="USILAMPATTI">USILAMPATTI</option>
+                        <option value="VEDARANYAM">VEDARANYAM</option>
+                        <option value="VEDASANDUR">VEDASANDUR</option>
+                        <option value="VELANKANNI">VELANKANNI</option>
+                        <option value="VELLORE">VELLORE</option>
+                        <option value="VILLUPURAM">VILLUPURAM</option>
+                </datalist>
+            </div>
+
+            <div id="2" style="visibility: hidden;">
+                <p>May I know the Arrival station?</p>
+                <input type="text" list="arrivalstations" name="arrivingstations" id="arrivingstations" placeholder="Eg. Madurai">
+                <datalist name="arrivalstations" id="arrivalstations">
+                    <option value="">-- Select a Location --</option>
+                    <option value="ALANKULAM">ALANKULAM</option>
+                    <option value="ANNAVASAL">ANNAVASAL</option>
+                    <option value="ARANI-TIRUPATHI">ARANI-TIRUPATHI</option>
+                    <option value="ARANTHANGI">ARANTHANGI</option>
+                    <option value="ARIMALAM">ARIMALAM</option>
+                    <option value="ARUPPUKOTTAI">ARUPPUKOTTAI</option>
+                    <option value="AVUDAIYAR KOIL">AVUDAIYAR KOIL</option>
+                    <option value="AVUDAIARKOIL">AVUDAIARKOIL</option>
+                    <option value="BANGALORE">BANGALORE</option>
+                    <option value="BANGALORE (Via-Chittoor)">BANGALORE (Via-Chittoor)</option>
+                    <option value="BANGALORE(Via-Hosur)">BANGALORE(Via-Hosur)</option>
+                    <option value="BODI">BODI</option>
+                    <option value="CHENNAI">CHENNAI</option>
+                    <option value="CHENNAI (AVADI)">CHENNAI (AVADI)</option>
+                    <option value="CHENNAI (TVTR)">CHENNAI (TVTR)</option>
+                    <option value="CHENNAI (Via Chittoor)">CHENNAI (Via Chittoor)</option>
+                    <option value="CHENNAI (Via Vellore)">CHENNAI (Via Vellore)</option>
+                    <option value="CHENGANACHERRY">CHENGANACHERRY</option>
+                    <option value="CHIDAMBARAM">CHIDAMBARAM</option>
+                    <option value="COIMBATORE">COIMBATORE</option>
+                    <option value="CUMBAM">CUMBAM</option>
+                    <option value="DEVAKOTTAI">DEVAKOTTAI</option>
+                    <option value="DHARAPURAM">DHARAPURAM</option>
+                    <option value="DHARMAPURI">DHARMAPURI</option>
+                    <option value="DINDIGUL">DINDIGUL</option>
+                    <option value="ERNAKULAM">ERNAKULAM</option>
+                    <option value="ERODE">ERODE</option>
+                    <option value="ERUVADI">ERUVADI</option>
+                    <option value="GANDARVAKOTTAI">GANDARVAKOTTAI</option>
+                    <option value="GOBI">GOBI</option>
+                    <option value="GUDALORE (OOTY)">GUDALORE (OOTY)</option>
+                    <option value="GUDALORE (OODY)">GUDALORE (OODY)</option>
+                    <option value="GURUVAYUR">GURUVAYUR</option>
+                    <option value="HOSUR">HOSUR</option>
+                    <option value="IDAYANKUDI">IDAYANKUDI</option>
+                    <option value="ILUPPUR">ILUPPUR</option>
+                    <option value="KALPAKKAM">KALPAKKAM</option>
+                    <option value="KAMUDHI">KAMUDHI</option>
+                    <option value="KANYAKUMARI">KANYAKUMARI</option>
+                    <option value="KARAIKUDI">KARAIKUDI</option>
+                    <option value="KARUNGAL">KARUNGAL</option>
+                    <option value="KARUR">KARUR</option>
+                    <option value="KEERAMANGALAM">KEERAMANGALAM</option>
+                    <option value="KEEZHAKARAI">KEEZHAKARAI</option>
+                    <option value="KODAIKANAL">KODAIKANAL</option>
+                    <option value="KOLLAM">KOLLAM</option>
+                    <option value="KOLLENCODE">KOLLENCODE</option>
+                    <option value="KOTTARAKARA">KOTTARAKARA</option>
+                    <option value="KOZHICODE">KOZHICODE</option>
+                    <option value="KULASEKARAM">KULASEKARAM</option>
+                    <option value="KULASEKARAPATTINAM">KULASEKARAPATTINAM</option>
+                    <option value="KULATHUR">KULATHUR</option>
+                    <option value="KUMBAKONAM">KUMBAKONAM</option>
+                    <option value="KUMILI">KUMILI</option>
+                    <option value="KUTTAM">KUTTAM</option>
+                    <option value="MADURAI">MADURAI</option>
+                    <option value="MANALMELKUDI">MANALMELKUDI</option>
+                    <option value="MANNARKUDI">MANNARKUDI</option>
+                    <option value="MARTHANDAM">MARTHANDAM</option>
+                    <option value="METTUPALAYAM">METTUPALAYAM</option>
+                    <option value="MYLADUTHURAI">MYLADUTHURAI</option>
+                    <option value="NAGAPATTINAM">NAGAPATTINAM</option>
+                    <option value="NAGERCOIL">NAGERCOIL</option>
+                    <option value="NAKUDI">NAKUDI</option>
+                    <option value="NAMAKKAL">NAMAKKAL</option>
+                    <option value="NATHAM">NATHAM</option>
+                    <option value="OOTY">OOTY</option>
+                    <option value="OPPILAN">OPPILAN</option>
+                    <option value="PALANI">PALANI</option>
+                    <option value="PALLAPATTI">PALLAPATTI</option>
+                    <option value="PAPANASAM-TNV">PAPANASAM-TNV</option>
+                    <option value="PARAMAKUDI">PARAMAKUDI</option>
+                    <option value="PATHANAMTHITTA">PATHANAMTHITTA</option>
+                    <option value="PATTUKOTTAI">PATTUKOTTAI</option>
+                    <option value="PERAIYUR">PERAIYUR</option>
+                    <option value="PERIYAKULAM">PERIYAKULAM</option>
+                    <option value="PERIYAPATTINAM">PERIYAPATTINAM</option>
+                    <option value="POOMBUHAR">POOMBUHAR</option>
+                    <option value="POLLACHI">POLLACHI</option>
+                    <option value="PONNAMARAVATHY">PONNAMARAVATHY</option>
+                    <option value="PUDUCHERRY">PUDUCHERRY</option>
+                    <option value="PUDUKKOTTAI">PUDUKKOTTAI</option>
+                    <option value="PUDUKOTTAI">PUDUKOTTAI</option>
+                    <option value="PULLAMBADI">PULLAMBADI</option>
+                    <option value="RAMESWARAM">RAMESWARAM</option>
+                    <option value="RAMNAD">RAMNAD</option>
+                    <option value="SALEM">SALEM</option>
+                    <option value="SANKARANKOIL">SANKARANKOIL</option>
+                    <option value="SATTAN KULAM">SATTAN KULAM</option>
+                    <option value="SAYALKUDI">SAYALKUDI</option>
+                    <option value="SHENCOTTAH">SHENCOTTAH</option>
+                    <option value="SIVAGANGAI">SIVAGANGAI</option>
+                    <option value="SIVAKASI">SIVAKASI</option>
+                    <option value="SRIRANGAM">SRIRANGAM</option>
+                    <option value="SRIVILLIPUTHUR">SRIVILLIPUTHUR</option>
+                    <option value="TAMBARAM">TAMBARAM</option>
+                    <option value="THANJAVUR">THANJAVUR</option>
+                    <option value="THENI">THENI</option>
+                    <option value="THYSAYANVILAI">THYSAYANVILAI</option>
+                    <option value="TIRUCHENDUR">TIRUCHENDUR</option>
+                    <option value="TIRUMANGALAM">TIRUMANGALAM</option>
+                    <option value="TIRUMAYAM">TIRUMAYAM</option>
+                    <option value="TIRUNALLAR">TIRUNALLAR</option>
+                    <option value="TIRUNELVELI">TIRUNELVELI</option>
+                    <option value="TIRUPATHI">TIRUPATHI</option>
+                    <option value="TIRUPATHURRMD">TIRUPATHURRMD</option>
+                    <option value="TIRUPPUR">TIRUPPUR</option>
+                    <option value="TIRUTHANGAL">TIRUTHANGAL</option>
+                    <option value="TIRUTHURAIPOOND">TIRUTHURAIPOOND</option>
+                    <option value="TIRUVARUR">TIRUVARUR</option>
+                    <option value="TIRUVANMIYUR">TIRUVANMIYUR</option>
+                    <option value="TONDI Via Mimisal">TONDI Via Mimisal</option>
+                    <option value="TRICHY">TRICHY</option>
+                    <option value="TRICHY (BHEL)">TRICHY (BHEL)</option>
+                    <option value="TRICHY-BHEL">TRICHY-BHEL</option>
+                    <option value="TRISSUR">TRISSUR</option>
+                    <option value="TRIVANDRUM">TRIVANDRUM</option>
+                    <option value="TUTICORIN">TUTICORIN</option>
+                    <option value="UDANKUDI">UDANKUDI</option>
+                    <option value="UDUMALPET">UDUMALPET</option>
+                    <option value="USILAMPATTI">USILAMPATTI</option>
+                    <option value="VEDARANYAM">VEDARANYAM</option>
+                    <option value="VEDASANDUR">VEDASANDUR</option>
+                    <option value="VELANKANNI">VELANKANNI</option>
+                    <option value="VELLORE">VELLORE</option>
+                    <option value="VILLUPURAM">VILLUPURAM</option>
+                    <option value="VIRUDHUNAGAR">VIRUDHUNAGAR</option>
+                </datalist>
+            </div>
+
+            <div id="3" style="visibility: hidden;">
+                <p>May I know the Boarding date?</p>
+                <input type="date" name="departdate" id="departdate">
+            </div>
+
+            <div id="4" style="visibility: hidden;">
+                <p>May I know the bus type you are looking for?</p>
+                <select name="bustypedropdown" id="bustypedropdown">
+                    <option value="">-- Select a Type --</option>
+                    <option value="A/C">A/C</option>
+                    <option value="ULTRA">ULTRA</option>
+                </select>
+            </div>
+
+            <div id="4.5" style="visibility: hidden;">
+                <p>Searching for available buses...</p>
+                <div id="buslist"></div>
+            </div>
+
+            <div id="5" style="visibility: hidden;">
+                <p>Please Enter the count of Adult Passengers (Age more than 5)</p>
+                <input type="number" name="adultpassengercount" id="adultpassengercount" min="1" placeholder="Eg. 1">
+            </div>
+
+            <div id="6" style="visibility: hidden;">
+                <p>Children less than Age 5 don't need to book tickets</p>
+                <p>Please Enter the names and ages of passengers</p>
+                <div id="nameandage"></div>
+            </div>
+
+            <div id="7" style="visibility: hidden;">
+                <div id="fareDisplay"></div>
+            </div>
+
+            <div id="8" style="visibility: hidden;">
+                <p>Booking confirmed! Thank you for using our service.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let availableBuses = [];
+        let selectedBusRoute = null;
+        let currentStep = 1;
+
+        // Handle navigation through steps
+        document.getElementById('departingstations').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                e.preventDefault();
+                document.getElementById('2').style.visibility = 'visible';
+                document.getElementById('arrivingstations').focus();
+            }
+        });
+
+        document.getElementById('arrivingstations').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                e.preventDefault();
+                document.getElementById('3').style.visibility = 'visible';
+                document.getElementById('departdate').focus();
+            }
+        });
+
+        document.getElementById('departdate').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                e.preventDefault();
+                document.getElementById('4').style.visibility = 'visible';
+                document.getElementById('bustypedropdown').focus();
+            }
+        });
+
+        document.getElementById('bustypedropdown').addEventListener('change', function(e) {
+            if (e.target.value.trim() !== '') {
+                searchBuses();
+            }
+        });
+
+        function searchBuses() {
+            const departStation = document.getElementById('departingstations').value.toUpperCase();
+            const arrivalStation = document.getElementById('arrivingstations').value.toUpperCase();
+            const busType = document.getElementById('bustypedropdown').value;
+
+            fetch('/search-buses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    from: departStation,
+                    to: arrivalStation,
+                    type: busType
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('4.5').style.visibility = 'visible';
+                const busListDiv = document.getElementById('buslist');
+                
+                if (data.status === 'success' && data.buses.length > 0) {
+                    availableBuses = data.buses;
+                    
+                    if (data.buses.length === 1) {
+                        selectedBusRoute = data.buses[0]['Route No.'];
+                        busListDiv.innerHTML = `
+                            <div class="bus-list">
+                                <p><strong>Available Bus:</strong></p>
+                                <div class="bus-item">
+                                    Route: ${data.buses[0]['Route No.']} | 
+                                    ${data.buses[0]['From']} → ${data.buses[0]['To']} | 
+                                    Type: ${data.buses[0]['Type']} | 
+                                    Fare: ₹${data.buses[0]['Fare']}
+                                </div>
+                            </div>
+                        `;
+                        setTimeout(() => {
+                            document.getElementById('5').style.visibility = 'visible';
+                            document.getElementById('adultpassengercount').focus();
+                        }, 1000);
+                    } else {
+                        let busHTML = '<div class="bus-list"><p><strong>Available Buses - Select One:</strong></p>';
+                        busHTML += '<select id="busSelector" style="width: 95%; margin: 10px;">';
+                        busHTML += '<option value="">-- Select a Bus --</option>';
+                        
+                        data.buses.forEach((bus, index) => {
+                            busHTML += `<option value="${bus['Route No.']}">
+                                Route ${bus['Route No.']} | ${bus['From']} → ${bus['To']} | 
+                                ${bus['Type']} | Fare: ₹${bus['Fare']}
+                            </option>`;
+                        });
+                        
+                        busHTML += '</select></div>';
+                        busListDiv.innerHTML = busHTML;
+                        
+                        document.getElementById('busSelector').addEventListener('change', function(e) {
+                            if (e.target.value) {
+                                selectedBusRoute = e.target.value;
+                                document.getElementById('5').style.visibility = 'visible';
+                                document.getElementById('adultpassengercount').focus();
+                            }
+                        });
+                    }
+                } else {
+                    busListDiv.innerHTML = `
+                        <div class="bus-list" style="background-color: #f8d7da; border-color: #dc3545;">
+                            <p style="color: #721c24;">No buses available for this route. Please try different stations or bus type.</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error searching buses!');
+            });
+        }
+
+        const adultpassengercountInput = document.getElementById('adultpassengercount');
+        const nameandage = document.getElementById('nameandage');
+
+        adultpassengercountInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                nameandage.innerHTML = '';
+                
+                const count = parseInt(adultpassengercountInput.value, 10);
+
+                if (!isNaN(count) && count > 0) {
+                    document.getElementById('6').style.visibility = 'visible';
+                    
+                    for (let i = 1; i <= count; i++) {
+                        const passengerDiv = document.createElement('div');
+                        passengerDiv.innerHTML = `
+                            <p style="text-align: left; margin-left: 15px;"><strong>Passenger ${i}</strong></p>
+                            <label for="name${i}" style="margin-left: 15px;">Name:</label>
+                            <input type="text" id="name${i}" name="name${i}" required>
+                            <label for="age${i}" style="margin-left: 15px;">Age:</label>
+                            <input type="number" id="age${i}" name="age${i}" required>
+                            <br><br>
+                        `;
+                        nameandage.appendChild(passengerDiv);
+                    }
+                    document.getElementById('name1').focus();
+                } else {
+                    nameandage.textContent = 'Please enter a valid number greater than 0.';
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const allAgeInputs = document.querySelectorAll('#nameandage input[type="number"]');
+
+                if (allAgeInputs.length > 0 && document.activeElement === allAgeInputs[allAgeInputs.length - 1]) {
+                    event.preventDefault();
+                    submitAllData();
+                }
+            }
+        });
+        
+        function submitAllData() {
+            const passengers = [];
+            const count = parseInt(adultpassengercountInput.value, 10);
+
+            for (let i = 1; i <= count; i++) {
+                const name = document.getElementById(`name${i}`).value;
+                const age = document.getElementById(`age${i}`).value;
+                passengers.push({ name: name, age: parseInt(age, 10) });
+            }
+
+            const allData = {
+                from: document.getElementById('departingstations').value.toUpperCase(),
+                to: document.getElementById('arrivingstations').value.toUpperCase(),
+                date: document.getElementById('departdate').value,
+                busType: document.getElementById('bustypedropdown').value,
+                routeNo: selectedBusRoute,
+                passengers: passengers
+            };
+
+            fetch('/submit-booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(allData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                displayFare(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error submitting data!');
+            });
+        }
+
+        function displayFare(data) {
+            document.getElementById('7').style.visibility = 'visible';
+            const fareDiv = document.getElementById('fareDisplay');
+            
+            let passengerDetailsHTML = '<ul>';
+            data.passenger_details.forEach(p => {
+                passengerDetailsHTML += `<li>${p.name} (Age: ${p.age}) - ₹${p.fare}</li>`;
+            });
+            passengerDetailsHTML += '</ul>';
+            
+            fareDiv.innerHTML = `
+                <div class="fare-display">
+                    <p style="text-align: center; font-size: 5mm;">Fare Calculation</p>
+                    <p>Route: ${data.route_no}</p>
+                    <p>Total Passengers: ${data.total_passengers}</p>
+                    <p>Passenger Details:</p>
+                    ${passengerDetailsHTML}
+                    <p style="font-size: 6mm; color: #28a745;">Total Fare: ₹${data.total_fare}</p>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                document.getElementById('8').style.visibility = 'visible';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
